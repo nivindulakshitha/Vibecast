@@ -22,13 +22,26 @@ async function main() {
                 if (roomData.designed[id]) {
                     console.error(`ID ${id} already exists in the 'designed' object.`);
                 } else {
+                    if (roomData.processing.includes(id)) {
+                        continue;
+                    }
+
+                    // Add id to 'processing' array in roomData
+                    roomData.processing.push(id);
+
                     const status = await scrapeAndUpdateRoomData(roomData, id, spotifyUrl);
 
                     // Write updated JSON content back to GitHub repository
                     await updateRoomData(owner, repo, filePath, 'Update room.json', roomData, responseSha);
 
+                    const index = roomData.processing.indexOf(id);
+                    if (index > -1) {
+                        roomData.processing.splice(index, 1);
+                    }
+
                     if (status === false) {
-                        console.error(`Error processing id ${id}`);
+                        // Remove id from 'processing' array in roomData
+                         console.error(`Error processing id ${id}`);
                         return;
                     }
 

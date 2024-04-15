@@ -1,7 +1,4 @@
 const puppeteer = require("puppeteer-core")
-const webdriver = require('selenium-webdriver');
-const { By, until } = require('selenium-webdriver');
-const chrome = require('selenium-webdriver/chrome');
 const chromium = require('chromium');
 
 async function scrapeAndUpdateRoomData(roomData, urlId, spotifyUrl) {
