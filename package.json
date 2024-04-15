@@ -2,14 +2,15 @@
   "name": "vibecast",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "test": "node SpotifyStream.js"
+    "test": "node main.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@octokit/core": "^6.1.2",
     "chrome-aws-lambda": "^10.1.0",
     "chromedriver": "^123.0.3",
     "chromium": "^3.0.3",
