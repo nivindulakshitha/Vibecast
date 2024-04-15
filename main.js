@@ -18,17 +18,7 @@ async function main() {
             const spotifyUrl = roomData.waiting[id];
             if (spotifyUrl) {
 
-                if (roomData.processing.includes(id)) {
-                    console.log(`ID ${id} is already being processed.`);
-                    continue;
-                }
-
-                // Add id to 'processing' object in roomData
-                roomData.processing.push(id);
-
-                // Write updated JSON content back to GitHub repository
-                await updateRoomData(owner, repo, filePath, `Processing id ${id}`, roomData, responseSha);
-                // Perform web scraping and update roomData
+                // Add id to 'processing' object in ro
                 const downloadHref = await scrapeAndUpdateRoomData(roomData, id, spotifyUrl);
 
                 // Write updated JSON content back to GitHub repository
