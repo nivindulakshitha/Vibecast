@@ -4,9 +4,10 @@ const { By, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 const chromium = require('chromium');
 
-async function scrapeAndUpdateRoomData(roomData, spotifyUrl) {
+async function scrapeAndUpdateRoomData(roomData, urlId, spotifyUrl) {
     let browser;
     try {
+        console.log('Scraping Spotify URL:', spotifyUrl);
         browser = await puppeteer.launch({ executablePath: chromium.path });
         const page = await browser.newPage();
 
@@ -20,8 +21,8 @@ async function scrapeAndUpdateRoomData(roomData, spotifyUrl) {
 
         // Update 'downloadHref' in the JSON content
         roomData.designed = roomData.designed || {};
-        roomData.designed.id = roomData.designed.id || {};
-        roomData.designed.id.url = downloadHref;
+        roomData.designed[urlId] = {};
+        roomData.designed[urlId].url = downloadHref;
 
         // Close browser and return downloadHref
         return downloadHref;

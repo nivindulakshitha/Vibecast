@@ -1,4 +1,6 @@
 const axios = require('axios');
+dotenv = require('dotenv');
+dotenv.config();
 
 let accessToken;
 

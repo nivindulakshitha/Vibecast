@@ -15,13 +15,19 @@ async function main() {
 
         // Check if 'url' field exists in 'waiting' object
         for (let id in roomData.waiting) {
-            const spotifyUrl = roomData.waiting[id];
+            const spotifyUrl = roomData.waiting[id].url;
             if (spotifyUrl) {
                 // Perform web scraping and update roomData
-                const downloadHref = await scrapeAndUpdateRoomData(roomData, spotifyUrl);
+                const downloadHref = await scrapeAndUpdateRoomData(roomData, id, spotifyUrl);
 
                 // Write updated JSON content back to GitHub repository
                 await updateRoomData(owner, repo, filePath, 'Update room.json', roomData, responseSha);
+
+                // Remove the processed 'waiting' object from roomData
+                delete roomData.waiting[id];
+
+                // Write updated JSON content back to GitHub repository
+                await updateRoomData(owner, repo, filePath, `Procee complete for id ${id}`, roomData, responseSha);
 
                 return downloadHref;
             } else {
@@ -34,4 +40,4 @@ async function main() {
     }
 }
 
-setInterval(main, 60000);
+setInterval(main, 5000);
