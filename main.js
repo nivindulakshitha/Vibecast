@@ -21,12 +21,16 @@ async function main() {
                 // Check if 'id' already exists in 'designed' object
                 if (roomData.designed[id]) {
                     console.error(`ID ${id} already exists in the 'designed' object.`);
-                    continue;
                 } else {
-                    await scrapeAndUpdateRoomData(roomData, id, spotifyUrl);
+                    const status = await scrapeAndUpdateRoomData(roomData, id, spotifyUrl);
 
                     // Write updated JSON content back to GitHub repository
                     await updateRoomData(owner, repo, filePath, 'Update room.json', roomData, responseSha);
+
+                    if (status === false) {
+                        console.error(`Error processing id ${id}`);
+                        return;
+                    }
 
                 }
 
