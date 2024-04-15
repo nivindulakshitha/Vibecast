@@ -18,19 +18,27 @@ async function main() {
             const spotifyUrl = roomData.waiting[id];
             if (spotifyUrl) {
 
+                // Check if 'id' already exists in 'designed' object
+                if (roomData.designed[id]) {
+                    console.error(`ID ${id} already exists in the 'designed' object.`);
+                    continue;
+                } else {
+                    await scrapeAndUpdateRoomData(roomData, id, spotifyUrl);
+
+                    // Write updated JSON content back to GitHub repository
+                    await updateRoomData(owner, repo, filePath, 'Update room.json', roomData, responseSha);
+
+                }
+
                 // Add id to 'processing' object in ro
-                const downloadHref = await scrapeAndUpdateRoomData(roomData, id, spotifyUrl);
-
-                // Write updated JSON content back to GitHub repository
-                await updateRoomData(owner, repo, filePath, 'Update room.json', roomData, responseSha);
-
+               
                 // Remove the processed 'waiting' object from roomData
                 delete roomData.waiting[id];
 
                 // Write updated JSON content back to GitHub repository
                 await updateRoomData(owner, repo, filePath, `Procee complete for id ${id}`, roomData, responseSha);
 
-                return downloadHref;
+                
             } else {
                 console.error("URL not found in room data to be processed.");
                 return;
