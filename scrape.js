@@ -19,9 +19,10 @@ async function scrapeAndUpdateRoomData(roomData, urlId, spotifyUrl) {
         const downloadHref = await page.$eval(".abuttons a", element => element.getAttribute("href"));
 
         // Update 'downloadHref' in the JSON content
+        const urlParams = new URLSearchParams(downloadHref.split('?')[1]);
         roomData.designed = roomData.designed || {};
-        roomData.designed[urlId] = downloadHref;
-        console.log(`Download link for ID ${urlId}: ${downloadHref}`);
+        roomData.designed[urlId] = urlParams.get('url');
+        console.log(`Download link for ID ${urlId}: ${roomData.designed[urlId]}`);``
         console.log(roomData)
 
         // Close browser and return downloadHref
