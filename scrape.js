@@ -20,7 +20,7 @@ async function scrapeAndUpdateRoomData(roomData, urlId, spotifyUrl) {
 
         // Update 'downloadHref' in the JSON content
         roomData.designed = roomData.designed || {};
-        roomData.designed.urlId = downloadHref;
+        roomData.designed[urlId] = downloadHref;
 
         console.log(roomData)
 
@@ -28,14 +28,13 @@ async function scrapeAndUpdateRoomData(roomData, urlId, spotifyUrl) {
         return downloadHref;
     } catch (err) {
         console.error('Error during web scraping:', err);
-        const index = roomData.processing.indexOf(urlId);
-        if (index > -1) {
-            roomData.processing.splice(index, 1);
-        }
-        throw err;
     } finally {
         if (browser) {
             await browser.close();
+        }
+        const index = roomData.processing.indexOf(urlId);
+        if (index > -1) {
+            roomData.processing.splice(index, 1);
         }
     }
 }
