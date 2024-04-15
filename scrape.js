@@ -22,6 +22,8 @@ async function scrapeAndUpdateRoomData(roomData, urlId, spotifyUrl) {
         roomData.designed = roomData.designed || {};
         roomData.designed.urlId = downloadHref;
 
+        console.log(roomData)
+
         // Close browser and return downloadHref
         return downloadHref;
     } catch (err) {
