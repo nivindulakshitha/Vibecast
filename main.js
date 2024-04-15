@@ -5,7 +5,7 @@ const { scrapeAndUpdateRoomData } = require('./scrape.js');
 
 async function isValidSpotifyUrl(url) {
     // Regular expression to match the Spotify track URL format
-    const spotifyUrlPattern = /^https:\/\/open\.spotify\.com\/track\/[a-zA-Z0-9]+$/;
+    const spotifyUrlPattern = /^https:\/\/open\.spotify\.com\/track\/[a-zA-Z0-9]+(\?.*)?$/;
 
     // Test if the URL matches the pattern
     return spotifyUrlPattern.test(url);
