@@ -4,7 +4,7 @@ let accessToken;
 
 async function initializeAccessToken() {
     // Initialize access token here
-    accessToken = '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';
+    accessToken = process.env.GITHUB_ACCESS_TOKEN;
 }
 
 async function getRoomData(owner, repo, filePath) {
