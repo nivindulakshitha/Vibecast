@@ -11,14 +11,6 @@ async function isValidSpotifyUrl(url) {
     return spotifyUrlPattern.test(url);
 }
 
-// Example usage:
-const url = "https://open.spotify.com/track/1w9L6dvttZalWd8XqFYvSa?si=ced0b683989d48ad";
-console.log(isValidSpotifyUrl(url)); // Output: true
-
-const invalidUrl = "https://open.spotify.com/album/12345";
-console.log(isValidSpotifyUrl(invalidUrl)); // Output: false
-
-
 async function main() {
     const owner = 'nivindulakshitha';
     const repo = 'Vibecast';
@@ -89,4 +81,4 @@ async function main() {
     }
 }
 
-setInterval(main, 5000);
+setInterval(main, 60000);
