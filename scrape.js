@@ -5,9 +5,9 @@ const chrome = require('selenium-webdriver/chrome');
 const chromium = require('chromium');
 
 async function scrapeAndUpdateRoomData(roomData, urlId, spotifyUrl) {
-    let browser;
+    let browser;    
     try {
-        browser = await puppeteer.launch({ executablePath: chromium.path });
+        browser = await puppeteer.launch({ executablePath: chromium.path, headless: true});
         const page = await browser.newPage();
 
         await page.goto("https://spotifymate.com/");

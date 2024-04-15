@@ -12,6 +12,7 @@ async function isValidSpotifyUrl(url) {
 }
 
 async function main() {
+    console.log("Running main function...")
     const owner = 'nivindulakshitha';
     const repo = 'Vibecast';
     const filePath = 'room.json';
@@ -43,11 +44,13 @@ async function main() {
 
                     // Add id to 'processing' array in roomData
                     roomData.processing.push(id);
-
+                    console.log(`Processing id ${id}...`);
                     const status = await scrapeAndUpdateRoomData(roomData, id, spotifyUrl);
 
                     // Write updated JSON content back to GitHub repository
                     await updateRoomData(owner, repo, filePath, 'Update room.json', roomData, responseSha);
+
+                    console.log(`Processed id ${id}.`);
 
                     const index = roomData.processing.indexOf(id);
                     if (index > -1) {
@@ -81,4 +84,5 @@ async function main() {
     }
 }
 
-setInterval(main, 30000);
+main();
+setInterval(main, 60000);
