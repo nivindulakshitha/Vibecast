@@ -33,7 +33,10 @@ async function main() {
             const spotifyUrl = roomData.waiting[id];
             if (spotifyUrl) {
 
-                if (!isValidSpotifyUrl(spotifyUrl)) {
+                if (!await isValidSpotifyUrl(spotifyUrl)) {
+                    // Remove the invalid 'waiting' object from roomData
+                    delete roomData.waiting[id];
+                    await updateRoomData(owner, repo, filePath, `Removed invalid URL for id ${id}`, roomData, responseSha);
                     console.error(`Invalid Spotify URL for id ${id}: ${spotifyUrl}`);
                     return;
                 }
