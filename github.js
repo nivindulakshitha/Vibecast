@@ -23,8 +23,7 @@ async function getRoomData(owner, repo, filePath) {
         const responseSha = response.data.sha;
         return { roomData, responseSha };
     } catch (err) {
-        console.error('Error retrieving room.json from GitHub:', err);
-        throw err;
+        console.error('Error retrieving room.json from GitHub:', err.message);
     }
 }
 
@@ -41,8 +40,7 @@ async function updateRoomData(owner, repo, filePath, message, content, sha) {
             }
         });
     } catch (err) {
-        console.error('Error updating room.json on GitHub:', err);
-        throw err;
+        console.error('Error updating room.json on GitHub:', err.message);
     }
 }
 

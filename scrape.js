@@ -27,7 +27,7 @@ async function scrapeAndUpdateRoomData(roomData, urlId, spotifyUrl) {
         // Close browser and return downloadHref
         return downloadHref;
     } catch (err) {
-        console.error('Error during web scraping:', err);
+        console.error('Error during web scraping:', err.message);
     } finally {
         if (browser) {
             await browser.close();
