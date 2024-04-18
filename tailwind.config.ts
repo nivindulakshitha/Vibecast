@@ -7,6 +7,7 @@ const config = {
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
+    './public/*.{mp3,svg,png,jpg,jpeg,webp}',
 	],
   prefix: "",
   theme: {
