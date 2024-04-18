@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react';
 
 export default function Peak({ url }: { url: string }) {
 	const ref = useRef<HTMLDivElement>(null);
+	const peaksInstanceRef = useRef<any>(null); // Ref to Peaks.js instance
 
 	useEffect(() => {
 		const initializePeaks = () => {
@@ -22,25 +23,28 @@ export default function Peak({ url }: { url: string }) {
 						audioContext: new AudioContext(),
 						scale: 128,
 						multiChannel: false
-					},
-					segment: {
-						id: "segment1",
-						startTime: 0,
-						endTime: 30,
-						editable: true,
-						color: "#ff0000",
-						labelText: "My label"
 					}
 				};
 
-				const peaksInstance = peaks.init(options);
-				peaksInstance.on('peaks.ready', () => {
-					console.log('Peaks ready!');
-					peaksInstance.player.play();
+				peaksInstanceRef.current = peaks.init(options);
+				peaksInstanceRef.current.on('peaks.ready', () => {
+					// Set up a segment
+					const startTime = 5; // Start time in seconds
+					const endTime = 10; // End time in seconds
+					peaksInstanceRef.current.segments.add({
+						startTime: startTime,
+						endTime: endTime,
+						labelText: 'Segment' // Optional label for the segment
+					});
+
+					// Play only the segment
+					peaksInstanceRef.current.player.playSegment(startTime, endTime);
 				});
-				
+
 				return () => {
-					peaksInstance.destroy();
+					if (peaksInstanceRef.current) {
+						peaksInstanceRef.current.destroy();
+					}
 				};
 			}
 		};
