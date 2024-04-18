@@ -34,6 +34,10 @@ export default function Peak({ url }: { url: string }) {
 				};
 
 				const peaksInstance = peaks.init(options);
+				peaksInstance.on('peaks.ready', () => {
+					console.log('Peaks ready!');
+					peaksInstance.player.play();
+				});
 				
 				return () => {
 					peaksInstance.destroy();
