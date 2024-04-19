@@ -58,8 +58,3 @@
 		@apply bg-background text-foreground;
 	}
 }
-
-#zoomview-container, #overview-container {
-  width: 1000px;
-  height: 100px;
-}

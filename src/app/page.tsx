@@ -1,7 +1,8 @@
 // app.tsx
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import Peak from "@/components/peaks";
+import Peak from "@/components/peaks/peaks";
+import styles from "@/components/peaks/peaks.module.css"
 
 export default function Home() {
 	return (
