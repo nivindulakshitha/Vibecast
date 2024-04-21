@@ -1,22 +1,21 @@
 "use client";
 import * as React from 'react';
 import peaks, { Segment } from 'peaks.js';
-import { useRef } from 'react';
 
-export default function Peak() {
-	const ref = useRef<HTMLDivElement>(null);
-	const peaksInstanceRef = useRef<any>(null);
+export default function usePeaks() {
+	const peaksRef = React.useRef<HTMLDivElement>(null);
+	const peaksInstanceRef = React.useRef<any>(null);
 
-	const initializePeaks = () => {
-		if (ref.current) {
+	React.useEffect(() => {
+		if (peaksRef.current) {
 			const options = {
-				container: ref.current,
-				zoomLevels: [4096],
+				container: peaksRef.current,
+				zoomLevels: [window.innerWidth],
 				zoomview: {
-					container: ref.current.querySelector('#zoomview-container')
+					container: peaksRef.current.querySelector('#zoomview-container')
 				},
 				overview: {
-					container: ref.current.querySelector('#overview-container')
+					container: peaksRef.current.querySelector('#overview-container')
 				},
 				mediaElement: document.getElementById('audio') as HTMLMediaElement,
 				webAudio: {
@@ -34,34 +33,18 @@ export default function Peak() {
 					startTime: startTime,
 					endTime: endTime,
 					labelText: 'Segment',
-					id: "id-1" 
+					id: "user-selection"
 				});
 
 				console.log("Segments:", peaksInstanceRef.current.segments);
-				console.log("Segment:", peaksInstanceRef.current.segments.getSegment('id-1'));
+				console.log("Segment:", peaksInstanceRef.current.segments.getSegment('user-selection'));
 			});
 
 			peaksInstanceRef.current.on('segments.click', function (segment: Segment) {
 				peaksInstanceRef.current.player.playSegment(segment)
 			});
-
-			return () => {
-				if (peaksInstanceRef.current) {
-					peaksInstanceRef.current.destroy();
-				}
-			};
 		}
-	};
-
-	React.useEffect(() => {
-		initializePeaks();
-
-		return () => {
-			if (peaksInstanceRef.current) {
-				peaksInstanceRef.current.destroy();
-			}
-		};
 	}, []);
 
-	return <div ref={ref} />;
+	return peaksRef;
 }
